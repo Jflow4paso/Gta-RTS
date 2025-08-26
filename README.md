@@ -1,4 +1,4 @@
-# [Unity/C#] Making a RTS game
+-------------# [Unity/C#] Making a RTS game
 
 **Mina Pêcheux • March 2021 - March 2022**
 
