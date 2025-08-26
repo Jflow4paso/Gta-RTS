@@ -1,4 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="4096" height="2304" viewBox="0 0 4096 2304" version="1.1">
+	<!--
+		Notes:
+		- Coordinate space: 4096x2304 px, origin at top-left.
+		- Parallax: see data-parallax-x/y on each layer; 0..1 where larger == closer.
+		- Intended import: Unity Vector Graphics package; 256 px per unit.
+		- Layers: water, land, parks, piers, arterial/secondary/tertiary roads, buildings-back/front, overlays.
+		- Collision: use 'land' path for terrain polygon; buildings rects as trigger boxes.
+		- Art style: muted palette; tweak in <style> if needed.
+	-->
 	<title>Fictional Downtown Manhattan - Background Map</title>
 	<desc>Stylized, game-ready background map for a fictional Downtown Manhattan layout. Organized in layers for Unity parallax and sorting.</desc>
 	<defs>

@@ -1,0 +1,137 @@
+{
+	// Human-readable name for the map (not used by Unity importer directly)
+	"mapName": "Fictional Downtown Manhattan",
+
+	// Version of this metadata file for your own tracking
+	"version": "1.0.0",
+
+	// The SVG filename this metadata describes (same folder)
+	"sourceSvg": "downtown_manhattan_fictional.svg",
+
+	// Canvas size in pixels and how it maps to Unity units (pixelsPerUnit)
+	"canvas": {
+		"width": 4096, // px
+		"height": 2304, // px
+		"pixelsPerUnit": 256, // 256 px == 1 Unity unit (meters if default)
+		"origin": "top-left" // SVG coordinates are top-left; Unity Y+ is up
+	},
+
+	// Sorting layers you may want to create in Unity (optional helper list)
+	"sortingLayers": ["Background", "Midground", "Foreground", "UI"],
+
+	// Layer configuration mirrors groups in the SVG by id
+	"layers": [
+		{
+			"id": "layer-water",
+			"type": "background",
+			"sortingLayer": "Background",
+			"orderInLayer": 0,
+			"parallax": { "x": 0.2, "y": 0.2 } // smaller values = farther
+		},
+		{
+			"id": "layer-land",
+			"type": "terrain",
+			"sortingLayer": "Background",
+			"orderInLayer": 10,
+			"parallax": { "x": 0.4, "y": 0.4 },
+			// Use the path with class "land" to generate a polygon collider
+			"collider": { "type": "polygon", "source": "path.land", "isTrigger": false }
+		},
+		{
+			"id": "layer-parks",
+			"type": "decoration",
+			"sortingLayer": "Midground",
+			"orderInLayer": 20,
+			"parallax": { "x": 0.45, "y": 0.45 }
+		},
+		{
+			"id": "layer-piers",
+			"type": "structure",
+			"sortingLayer": "Midground",
+			"orderInLayer": 25,
+			"parallax": { "x": 0.35, "y": 0.35 }
+		},
+		{
+			"id": "layer-roads-arterial",
+			"type": "road",
+			"sortingLayer": "Midground",
+			"orderInLayer": 30,
+			"parallax": { "x": 0.55, "y": 0.55 },
+			// Slightly faster navigation speed along arterials
+			"nav": { "walkable": true, "speedMultiplier": 1.15 }
+		},
+		{
+			"id": "layer-roads-secondary",
+			"type": "road",
+			"sortingLayer": "Midground",
+			"orderInLayer": 31,
+			"parallax": { "x": 0.6, "y": 0.6 },
+			"nav": { "walkable": true, "speedMultiplier": 1.05 }
+		},
+		{
+			"id": "layer-roads-tertiary",
+			"type": "road",
+			"sortingLayer": "Midground",
+			"orderInLayer": 32,
+			"parallax": { "x": 0.62, "y": 0.62 },
+			"nav": { "walkable": true, "speedMultiplier": 1.0 }
+		},
+		{
+			"id": "layer-buildings-back",
+			"type": "building",
+			"sortingLayer": "Foreground",
+			"orderInLayer": 5,
+			"parallax": { "x": 0.7, "y": 0.7 },
+			// Building rectangles as triggers for enter/exit or occlusion logic
+			"collider": { "type": "box", "source": "rect.building-back", "isTrigger": true }
+		},
+		{
+			"id": "layer-buildings-front",
+			"type": "building",
+			"sortingLayer": "Foreground",
+			"orderInLayer": 8,
+			"parallax": { "x": 0.8, "y": 0.8 },
+			"collider": { "type": "box", "source": "rect.building-front", "isTrigger": true }
+		},
+		{
+			"id": "layer-overlays",
+			"type": "overlay",
+			"sortingLayer": "UI",
+			"orderInLayer": 0,
+			"parallax": { "x": 0.9, "y": 0.9 }
+		}
+	],
+
+	// Suggested spawn points in SVG pixel space (convert to Unity units if needed)
+	"spawnPoints": [
+		{ "name": "Player_Start_BatteryPark", "position": { "x": 1220, "y": 2020 } },
+		{ "name": "Enemy_Spawn_Financial", "position": { "x": 1680, "y": 1840 } },
+		{ "name": "Pickup_Spawn_ParkSouth", "position": { "x": 1460, "y": 1980 } }
+	],
+
+	// Path nodes useful for patrols or routes (in SVG pixel space)
+	"paths": [
+		{ "name": "Patrol_Broadway", "nodes": [[940,2100],[1180,2010],[1400,1900],[1620,1760],[1820,1600],[2020,1420],[2200,1240],[2360,1060]] },
+		{ "name": "Route_WestSide", "nodes": [[900,2090],[1200,2050],[1500,1990],[1780,1880],[1980,1760]] }
+	],
+
+	// Camera clamp in SVG pixel space for a side-scroller or top-down camera
+	"cameraBounds": { "minX": 800, "minY": 1200, "maxX": 3000, "maxY": 2150 },
+
+	// Minimap rendering hints
+	"minimap": { "scale": 0.1, "backgroundColor": "#0b3d59" },
+
+	// Unity-specific helper settings (install Vector Graphics package for SVG)
+	"unity": {
+		"import": {
+			"package": "com.unity.vectorgraphics",
+			"spriteImportMode": "Single",
+			"svgPixelsPerUnit": 256,
+			"preserveViewport": true
+		},
+		"sorting": { "createSortingLayers": true }
+	},
+
+	// Free-form notes for future maintainers
+	"notes": "Parallax values match data attributes in SVG groups. Offset layers in code based on camera delta. When converting SVG pixels to Unity units, divide by canvas.pixelsPerUnit (default 256)."
+}
